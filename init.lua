@@ -34,8 +34,26 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-	{ 'folke/tokyonight.nvim',
+	{
 		{ "catppuccin/nvim",                 name = "catppuccin" },
+		{
+			"folke/tokyonight.nvim",
+			lazy = false,
+			priority = 1000,
+			opts = {},
+		},
+		{
+			"utilyre/barbecue.nvim",
+			name = "barbecue",
+			version = "*",
+			dependencies = {
+				"SmiteshP/nvim-navic",
+				"nvim-tree/nvim-web-devicons", -- optional dependency
+			},
+			opts = {
+				theme = 'tokyonight'
+			},
+		},
 		'williamboman/mason.nvim',
 		'williamboman/mason-lspconfig.nvim',
 		'windwp/nvim-autopairs',
@@ -63,7 +81,7 @@ require("lazy").setup({
 
 -- Plugins commands
 
-vim.cmd.colorscheme('catppuccin-macchiato')
+vim.cmd.colorscheme('tokyonight')
 require('nvim-autopairs').setup()
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 require('mason').setup()
@@ -74,7 +92,11 @@ mason_lspconfig.setup_handlers {
 		require("lspconfig")[server_name].setup { capabilities = capabilities }
 	end,
 }
-require('lualine').setup()
+require('lualine').setup({
+	options = {
+		theme = 'tokyonight'
+	}
+})
 local telescopeBuiltin = require('telescope.builtin')
 
 require("indent_blankline").setup {}
